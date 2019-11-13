@@ -1,0 +1,26 @@
+version: '3'
+services:
+  hades:
+    build:
+      context: hades
+      dockerfile: .docker/Dockerfile
+    ports:
+      - "8081:80"
+  zeus:
+    build:
+      context: zeus
+      dockerfile: .docker/Dockerfile
+    ports:
+      - "8082:80"
+  aphrodite:
+    build:
+      context: aphrodite
+      dockerfile: .docker/Dockerfile
+    ports:
+      - "8083:80"
+  apollo:
+    build:
+      context: apollo
+      dockerfile: .docker/Dockerfile
+    ports:
+      - "8084:80"

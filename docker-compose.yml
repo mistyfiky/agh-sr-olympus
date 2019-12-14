@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   hades:
     build:
@@ -6,6 +6,19 @@ services:
       dockerfile: .docker/Dockerfile
     ports:
       - "8081:80"
+    environment:
+      - JWT_KEY
+      - DB_DSN=${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(hades-db)/${HADES_DB_NAME}
+    depends_on:
+      - "hades-db"
+    restart: on-failure
+  hades-db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=${HADES_DB_NAME}
+      - MYSQL_USER
+      - MYSQL_PASSWORD
   zeus:
     build:
       context: zeus

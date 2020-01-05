@@ -1,11 +1,15 @@
-version: '3'
+version: "3"
 services:
   zeus:
     volumes:
-      - './zeus/public_html:/var/www/html'
+      - "./zeus/public_html:/var/www/html"
   aphrodite:
     volumes:
-      - './aphrodite/public_html:/usr/local/apache2/htdocs'
+      - "./aphrodite/public_html:/usr/local/apache2/htdocs"
   apollo:
     volumes:
-      - './apollo/public_html:/var/www/html'
+      - "./apollo/public_html:/var/www/html"
+  delphi:
+    ports:
+      - "8085:7474"
+      - "7687:7687"

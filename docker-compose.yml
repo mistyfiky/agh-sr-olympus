@@ -2,38 +2,55 @@ version: "3"
 services:
   hades:
     build:
-      context: hades
-      dockerfile: .docker/Dockerfile
+      context: "hades"
+      dockerfile: ".docker/Dockerfile"
     ports:
       - "8081:80"
     environment:
-      - JWT_KEY
-      - DB_DSN=${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(hades-db)/${HADES_DB_NAME}
+      - "JWT_KEY"
+      - "DB_DSN=${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(hades-db)/${HADES_DB_NAME}"
     depends_on:
       - "hades-db"
-    restart: on-failure
+    restart: "on-failure"
   hades-db:
-    image: mysql
+    image: "mysql"
     environment:
-      - MYSQL_ROOT_PASSWORD
-      - MYSQL_DATABASE=${HADES_DB_NAME}
-      - MYSQL_USER
-      - MYSQL_PASSWORD
+      - "MYSQL_ROOT_PASSWORD"
+      - "MYSQL_DATABASE=${HADES_DB_NAME}"
+      - "MYSQL_USER"
+      - "MYSQL_PASSWORD"
   zeus:
     build:
-      context: zeus
-      dockerfile: .docker/Dockerfile
+      context: "zeus"
+      dockerfile: ".docker/Dockerfile"
     ports:
       - "8082:80"
   aphrodite:
     build:
-      context: aphrodite
-      dockerfile: .docker/Dockerfile
+      context: "aphrodite"
+      dockerfile: ".docker/Dockerfile"
     ports:
       - "8083:80"
   apollo:
     build:
-      context: apollo
-      dockerfile: .docker/Dockerfile
+      context: "apollo"
+      dockerfile: ".docker/Dockerfile"
     ports:
       - "8084:80"
+  delphi:
+    image: "neo4j"
+    environment:
+      - "NEO4J_AUTH=none"
+    volumes:
+      - "delphi-data:/data"
+      - "./seed/delphi/import:/import"
+  delphi-seed:
+    image: "neo4j"
+    command: "sh -c 'cat seed.cypher | cypher-shell -a bolt://delphi:7687 --format verbose'"
+    volumes:
+      - "./seed/delphi/seed.cypher:/var/lib/neo4j/seed.cypher"
+    depends_on:
+      - "delphi"
+    restart: "on-failure"
+volumes:
+  delphi-data:

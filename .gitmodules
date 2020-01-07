@@ -1,9 +1,6 @@
 [submodule "hades"]
 	path = hades
 	url = git@github.com:mistyfiky/agh-sr-hades.git
-[submodule "zeus"]
-	path = zeus
-	url = git@github.com:mistyfiky/agh-sr-zeus.git
 [submodule "aphrodite"]
 	path = aphrodite
 	url = git@github.com:mistyfiky/agh-sr-aphrodite.git

@@ -1,8 +1,5 @@
 version: "3"
 services:
-  zeus:
-    volumes:
-      - "./zeus/public_html:/var/www/html"
   aphrodite:
     volumes:
       - "./aphrodite/public_html:/usr/local/apache2/htdocs"

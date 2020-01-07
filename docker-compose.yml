@@ -19,12 +19,6 @@ services:
       - "MYSQL_DATABASE=${HADES_DB_NAME}"
       - "MYSQL_USER"
       - "MYSQL_PASSWORD"
-  zeus:
-    build:
-      context: "zeus"
-      dockerfile: ".docker/Dockerfile"
-    ports:
-      - "8082:80"
   aphrodite:
     build:
       context: "aphrodite"

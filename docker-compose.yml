@@ -3,12 +3,12 @@ services:
   hades:
     build:
       context: "hades"
-      dockerfile: ".docker/Dockerfile"
     ports:
       - "8081:80"
     environment:
       - "JWT_KEY"
       - "DB_DSN=${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(hades-db)/${HADES_DB_NAME}"
+      - "APP_PORT=80"
     depends_on:
       - "hades-db"
     restart: "on-failure"
@@ -28,6 +28,9 @@ services:
   apollo:
     build:
       context: "apollo"
+    environment:
+      - "SENTRY_DSN"
+      - "NEO4J_URI=bolt://delphi"
     ports:
       - "8084:80"
   delphi:

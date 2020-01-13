@@ -48,5 +48,12 @@ services:
     depends_on:
       - "delphi"
     restart: "on-failure"
+  netdata:
+    build:
+      context: "netdata"
+    depends_on:
+      - "apollo"
+    ports:
+      - "19999:19999"
 volumes:
   delphi-data:
